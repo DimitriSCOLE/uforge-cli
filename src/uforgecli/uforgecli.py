@@ -9,8 +9,6 @@ except ImportError:
 
 import argparse
 import getpass
-import base64
-import httplib2
 import os
 import sys
 import ussclicore.utils.generics_utils
@@ -209,20 +207,18 @@ else:
 
 
 
-#UForge API instanciation
-client = httplib2.Http(disable_ssl_certificate_validation=sslAutosigned, timeout=constants.HTTP_TIMEOUT)
-#activate http caching
-#client = httplib2.Http(generics_utils.get_Uforgecli_dir()+os.sep+"cache")
-headers = {}
+#API Keys
 apikeys = {}
-
 if apikeysAuthentication:
         apikeys['publickey'] = publickey
         apikeys['secretkey'] = secretkey
-else:
-        headers['Authorization'] = 'Basic ' + base64.encodestring( username + ':' + password )
+        username = None
+        password = None
 
-api = Api(url, client = client, headers = headers, apikeys = apikeys)
+
+#UForge API instanciation
+api = Api(url, username = username, password = password, headers = None, disable_ssl_certificate_validation = sslAutosigned, apikeys = apikeys, timeout = constants.HTTP_TIMEOUT)
+
 set_globals_cmds(app.subCmds)
 
 if mainArgs.help and len(mainArgs.cmds)>=1:

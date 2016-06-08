@@ -1,8 +1,6 @@
 # Didn't find a way to run all the testSuite at once in the main.
 # So to run a test enter command : python -m unittest test.<NAME OF THE TEST SUITE>.
 
-import httplib2
-import base64
 import unittest
 import sys
 import os
@@ -52,6 +50,7 @@ if not "TEST_USER" in os.environ or not "TEST_PASSWORD" in os.environ or not "TE
 login = os.environ['TEST_USER']
 password = os.environ['TEST_PASSWORD']
 url = os.environ['TEST_URL']
+timeout = 10
 
 def get_targetFormat_id(targetFormat, name):
         stdout = sys.stdout
@@ -182,11 +181,9 @@ class UserTestSuite(unittest.TestSuite):
 
 
 class TestMotherClass(unittest.TestCase):
-        client = httplib2.Http()
-        headers = {}
-        headers['Authorization'] = 'Basic ' + base64.encodestring( login + ':' + password)
         global api
-        api = Api(url, client=client, headers=headers)
+        api = Api(url, username = login, password = password, disable_ssl_certificate_validation = True, timeout = timeout)
+
 
 class TestUser(TestMotherClass):
 
@@ -1145,8 +1142,8 @@ if __name__ == '__main__':
                                          imagesTestSuite])
 
 
-# if v >= (2,7):
-#         import xmlrunner
-#         unittest.main(testRunner=xmlrunner.XMLTestRunner(output='test-reports'))
-# else:
-#         unittest.main()
+if v >= (2,7):
+        import xmlrunner
+        unittest.main(testRunner=xmlrunner.XMLTestRunner(output='test-reports'))
+else:
+        unittest.main()
