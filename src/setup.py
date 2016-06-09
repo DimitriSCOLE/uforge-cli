@@ -1,4 +1,4 @@
-from setuptools import setup,find_packages
+from setuptools import setup,find_packages,Command
 from uforgecli.utils.constants import *
 import os
 import sys
@@ -25,7 +25,17 @@ if os.name != "nt":
 else:   #On Windows
         requires.append('pyreadline==2.0')
     
-                    
+class CleanCommand(Command):
+    """Custom clean command to tidy up the project root."""
+    user_options = []
+    def initialize_options(self):
+        pass
+    def finalize_options(self):
+        pass
+    def run(self):
+        os.system('rm -vrf ./build ./dist ./*.pyc ./*.egg-info | find -iname "*.pyc" -exec rm {} +')
+
+
 setup (  
 
   
@@ -56,7 +66,11 @@ setup (
         'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
     ),
-       
+
+  # ... custom build command
+  cmdclass={
+    'clean': CleanCommand,
+  },
   
   #long_description= 'Long description of the package',
   scripts = ['bin/uforge', 'bin/uforge.bat'],
