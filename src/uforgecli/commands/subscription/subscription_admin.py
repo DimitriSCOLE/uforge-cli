@@ -48,20 +48,20 @@ class Subscription_Admins(Cmd, CoreGlobal):
                                         exist = True
 
                                         # Create the list of administrators
-                                        admins = users()
-                                        admins.users = pyxb.BIND()
+                                        admins = userProfiles()
+                                        admins.userProfiles = pyxb.BIND()
 
                                         # Copy the list of current administrators
                                         for admin in item.admins.admin:
-                                                already_admin = user()
+                                                already_admin = userProfile()
                                                 already_admin.loginName = admin.loginName
-                                                admins.users.append(already_admin)
+                                                admins.userProfiles.append(already_admin)
 
                                         for e in doArgs.admins:
-                                                new_admin = user()
+                                                new_admin = userProfile()
                                                 new_admin.loginName = e
-                                                admins.users.append(new_admin)
-                                                printer.out("Added " + new_admin.loginName + " has admin.")
+                                                admins.userProfiles.append(new_admin)
+                                                printer.out("Added " + new_admin.loginName + " as admin.")
 
                                         # call UForge API
                                         self.api.Orgs(org.dbId).Subscriptions(item.dbId).Admins.Update(body=admins)
@@ -107,17 +107,17 @@ class Subscription_Admins(Cmd, CoreGlobal):
                                 if item.name == doArgs.name:
                                         exist = True
                                         # Create the list of administrators
-                                        admins = users()
-                                        admins.users = pyxb.BIND()
+                                        admins = userProfiles()
+                                        admins.userProfiles = pyxb.BIND()
 
                                         # Copy the list of current administrators - Remove the user selected in the input
                                         for admin in item.admins.admin:
                                                 if admin.loginName not in doArgs.admins:
                                                         already_admin = user()
                                                         already_admin.loginName = admin.loginName
-                                                        admins.users.append(already_admin)
+                                                        admins.userProfiles.append(already_admin)
                                                 else:
-                                                        printer.out("Removed " + admin.loginName + " has admin.")
+                                                        printer.out("Removed " + admin.loginName + " as admin.")
 
                                         # call UForge API
                                         self.api.Orgs(org.dbId).Subscriptions(item.dbId).Admins.Update(admins)
