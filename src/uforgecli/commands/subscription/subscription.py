@@ -157,11 +157,17 @@ class Subscription_Cmd(Cmd, CoreGlobal):
                         else:
                                 table.add_row(["Operating Systems", "None"])
 
-                        if subscription.formats.format:
-                                nbFormat = len(subscription.formats.format)
-                                table.add_row(["Image Formats", str(nbFormat)])
+                        if subscription.targetFormats.targetFormat:
+                                nbFormat = len(subscription.targetFormats.targetFormat)
+                                table.add_row(["Target Formats", str(nbFormat)])
                         else:
-                                table.add_row(["Image Formats", "None"])
+                                table.add_row(["Target Formats", "None"])
+
+                        if subscription.targetPlatforms.targetPlatform:
+                                nbPlatform = len(subscription.targetPlatforms.targetPlatform)
+                                table.add_row(["Target Platforms", str(nbPlatform)])
+                        else:
+                                table.add_row(["Target Platforms", "None"])
 
                         print table.draw() + "\n"
 
@@ -223,22 +229,38 @@ class Subscription_Cmd(Cmd, CoreGlobal):
                                 printer.out("Found " + str(nb) + " distribution(s).\n")
                         else:
                                 printer.out("Subscription profile doesn't have any distribution.\n")
-                        if subscription.formats.format:
-                                printer.out("Formats Details :")
+                        if subscription.targetFormats.targetFormat:
+                                printer.out("Target Formats Details :")
                                 table = Texttable(200)
                                 table.set_cols_align(["l", "l"])
-                                table.header(["Format", "Access"])
+                                table.header(["Target Format", "Access"])
 
-                                for item in subscription.formats.format:
+                                for item in subscription.targetFormats.targetFormat:
                                         if item.access:
                                                 access = "X"
                                         else:
                                                 access = ""
                                         table.add_row([item.name, access])
                                 print table.draw() + "\n"
-                                printer.out("Found " + str(nbFormat) + " format(s).\n")
+                                printer.out("Found " + str(nbFormat) + " target format(s).\n")
                         else:
-                                printer.out("Subscription profile doesn't have any formats.\n")
+                                printer.out("Subscription profile doesn't have any target formats.\n")
+                        if subscription.targetPlatforms.targetPlatform:
+                                printer.out("Target Platforms Details :")
+                                table = Texttable(200)
+                                table.set_cols_align(["l", "l"])
+                                table.header(["Target Platform", "Access"])
+
+                                for item in subscription.targetPlatforms.targetPlatform:
+                                        if item.access:
+                                                access = "X"
+                                        else:
+                                                access = ""
+                                        table.add_row([item.name, access])
+                                print table.draw() + "\n"
+                                printer.out("Found " + str(nbPlatform) + " target platform(s).\n")
+                        else:
+                                printer.out("Subscription profile doesn't have any target platforms.\n")
 
                         return 0
 
