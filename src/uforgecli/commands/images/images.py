@@ -138,7 +138,7 @@ class Images_Cmd(Cmd, CoreGlobal):
                         table = Texttable(200)
                         table.set_cols_align(["l", "l"])
                         table.add_row(["Name", infoImage.name])
-                        table.add_row(["Format", infoImage.format.name])
+                        table.add_row(["Format", infoImage.targetFormat.name])
                         table.add_row(["Id", infoImage.dbId])
                         table.add_row(["Version", infoImage.version])
                         table.add_row(["Revision", infoImage.revision])
