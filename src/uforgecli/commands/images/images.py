@@ -88,7 +88,7 @@ class Images_Cmd(Cmd, CoreGlobal):
                                                 if item3.applianceUri == item2.uri:
                                                         os = "" + item2.distributionName + "  " + item2.archName
                                                         break
-                                table.add_row([item.dbId, item.name, item.version, item.revision, os, item.format.name, timeCreated, size(item.size), compressed, status])
+                                table.add_row([item.dbId, item.name, item.version, item.revision, os, item.targetFormat.name, timeCreated, size(item.size), compressed, status])
                         print table.draw() + "\n"
 
                         printer.out(str(count)+" images found.")
