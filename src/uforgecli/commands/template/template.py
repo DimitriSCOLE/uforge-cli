@@ -425,7 +425,7 @@ class Template_Cmd(Cmd, CoreGlobal):
                                         status = "Generating"
                                 appliance = self.api.Users(doArgs.account).Appliances(doArgs.id).Get()
                                 osImage = appliance.distributionName + " " + appliance.archName
-                                table.add_row([image.dbId, image.name, image.version, image.revision, osImage, image.format.name, cloud, size(image.size), status])
+                                table.add_row([image.dbId, image.name, image.version, image.revision, osImage, image.targetFormat.name, cloud, size(image.size), status])
                         print table.draw() + "\n"
                         return 0
 
