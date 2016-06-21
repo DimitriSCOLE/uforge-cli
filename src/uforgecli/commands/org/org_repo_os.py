@@ -187,7 +187,7 @@ class Org_Repo_Os_Cmd(Cmd, CoreGlobal):
                                                 newRepository.distributionsUriList = repo.distributionsUriList
                                                 newRepository.distributionsUriList.uri.remove(dist.uri)
                                                 result = self.api.Orgs(org.dbId).Repositories(repo.dbId).Update(body=newRepository)
-                                                printer.out("Distribution(s) detached to repository ID [" + str(repo.dbId) + "] in [" + org.name + "].", printer.OK)
+                                                printer.out("Distribution(s) detached from repository ID [" + str(repo.dbId) + "] in [" + org.name + "].", printer.OK)
 
                         return 0
 
